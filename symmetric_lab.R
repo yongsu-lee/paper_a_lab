@@ -24,11 +24,13 @@ if (Sys.info()[1] == "Darwin"){
 }
 
 ## Set up parameters ####
-seed_para = 1
+seed_para = 2
+seed_iter = 1
 n_obs = 20 # the number of observations
 n_nodes = 10 # the number of total (multinomial) nodes
 graph_type = "rand"
-types_by_node = rep("m", n_nodes)
+# types_by_node = rep("c", n_nodes)
+types_by_node = gen_node_types(3, 3, 4, seed_para)
 n_levels_by_node = gen_node_levels(types_by_node, 4, seed = seed_para)
 
 ## Generate a true graph
@@ -42,8 +44,9 @@ n_edge = sum(A_true)
                    intcpt = "for_child_only", seed = seed_para))
 
 ## Generate a data matrix
-iter = 1
-(data_input = gen_data(n_obs, A_true, graph_true, W_true, seed = iter))
+(data_input = gen_data(n_obs, A_true, graph_true, W_true, seed = seed_iter))
+
+
 
 
 

@@ -97,8 +97,9 @@ gen_para = function(A_true, types_by_node = NULL, n_levels_by_node = NULL,
   }
   
   # .. Changed for symmetric lab ....
-  # Set the intercept of the first level of each node as zero (identifiability) ----
-  first_level_intcpt = sapply(idx_resps_by_node, function(x) x[1])
+  # Set the intercept of the first level of each node as zero (identifiability) 
+  first_level_intcpt = as.numeric(sapply(idx_resps_by_node[
+    types_by_node %in% c("m", "o") ], function(x) x[1]))
   W_true[n_row + 1, first_level_intcpt] <- 0 
   
   # Assign generated coefficients  ----
@@ -114,6 +115,8 @@ gen_para = function(A_true, types_by_node = NULL, n_levels_by_node = NULL,
   # .. Changed for symmetric lab ....
   # Put restriction across the level by level coefficients
   for (j in 1:n_nodes){ #j = 2
+    
+    if (types_by_node[j] == "c") next
     
     idx_resps_j = idx_resps_by_node[[j]]
     
@@ -149,6 +152,7 @@ gen_para = function(A_true, types_by_node = NULL, n_levels_by_node = NULL,
     rownames(W_true) <- c(expl_names(n_nodes, types_by_node, n_expls_by_node,
                                      ordin_pred_as = ordin_pred_as), "(Intcpt)")}
   
+  # class(W_true) <- "glmdag_para"
   
   return(W_true)
   

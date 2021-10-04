@@ -147,7 +147,7 @@ gen_data = function(n_obs, A_true, graph_true, W_true, ordin_pred_as = "num",
                      "m" = {
                        exp(etas) },
                      "o" = {
-                       H = etas %*% lower.tri(matrix(1,q_j,q_j), diag=T)
+                       H = etas %*% lower.tri(matrix(1, q_j, q_j), diag=T)
                        exp(H) } )
         
         # temp_deno = 1 + cbind(rowSums(Mu))
@@ -192,12 +192,16 @@ gen_data = function(n_obs, A_true, graph_true, W_true, ordin_pred_as = "num",
   
   if (df == T){
     Z <- as.data.frame(Z)
-    Z[, (types_by_node=="m") | (types_by_node=="o") ] <- 
-      lapply(Z[,types_by_node=="m" | types_by_node=="o" , drop = F], as.factor)
+    Z[, (types_by_node=="m")] <- 
+      lapply(Z[,types_by_node=="m", drop = F], as.factor)
+    Z[, (types_by_node=="o") ] <- 
+      lapply(Z[,types_by_node=="o", drop = F], function(x) factor(x, ordered = T))
   }
   
   colnames(Z) <- paste0("Z", 1:n_nodes)
   attr(Z,"n_obs_by_node") = n_obs_by_node
+  
+  # class(Z) <- glmdag_simu_data
   
   return(Z)
   

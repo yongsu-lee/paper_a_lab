@@ -415,6 +415,19 @@ print.glmdag = function(x, ...){
   
 }
 
+# print.glmdag_para = function(x, ...){
+#   out = x
+#   print(x, digits = 4)
+# }
+
+# print.glmdag_simu_data = function(x, ...){
+#   out = x
+#   options(digits = 2)
+#   print(x)
+#   options(digits = 7)
+# }
+
+
 ## Sub Functions and package
 
 skel = function(A){
